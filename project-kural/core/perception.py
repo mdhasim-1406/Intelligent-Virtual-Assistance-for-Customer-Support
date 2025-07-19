@@ -29,9 +29,10 @@ class PerceptionModule:
             import whisper
             logger.info("Loading Whisper model...")
             
-            # This is the correct way to load the model
-            self.whisper_model = whisper.load_model("base")
-            logger.info("Whisper model loaded successfully")
+            # CRITICAL UPGRADE: Use "small" model for superior accuracy and performance
+            # This provides significantly better accuracy for diverse accents and natural speech
+            self.whisper_model = whisper.load_model("small")
+            logger.info("Whisper 'small' model loaded successfully - Enhanced accuracy enabled")
             
         except ImportError as e:
             logger.error(f"Whisper library not installed: {e}")

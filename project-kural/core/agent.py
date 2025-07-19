@@ -26,7 +26,7 @@ class ChatOpenRouter:
     Custom ChatOpenRouter implementation for OpenRouter API integration.
     """
     
-    def __init__(self, model: str = "mistralai/mistral-7b-instruct"):
+    def __init__(self, model: str = "google/gemini-flash-1.5"):
         # Get API key from environment
         self.api_key = os.environ.get("OPENROUTER_API_KEY")
         if not self.api_key:
@@ -381,7 +381,11 @@ Remember: You are representing the company, so maintain high standards of servic
             sentiment: str = "Neutral", short_term_memory: Optional[ConversationBufferMemory] = None,
             long_term_summary: str = "") -> str:
         """
-        Main agent execution method that coordinates all components with knowledge base integration.
+        FINAL RE-ARCHITECTURE: Two-Step "Analyst-Translator" Chain
+        
+        This method implements a revolutionary two-step approach:
+        Step 1: "Analyst" - Produces clean English response with perfect logic
+        Step 2: "Translator" - Converts to native-level target language if needed
         
         Args:
             user_id (str): User identifier
@@ -392,50 +396,167 @@ Remember: You are representing the company, so maintain high standards of servic
             long_term_summary (str): User's conversation history summary
             
         Returns:
-            str: Agent's response
+            str: Agent's response in the user's native language
         """
         try:
-            logger.info(f"Processing request for user {user_id} with sentiment {sentiment}")
+            logger.info(f"🔬 ANALYST-TRANSLATOR CHAIN: Processing user {user_id} | Language: {language} | Sentiment: {sentiment}")
             
-            # Load appropriate persona
+            # Load appropriate persona for context
             persona_prompt = self._load_persona_prompt(sentiment)
             
-            # First, try to retrieve a response from the knowledge base
-            knowledge_base_response = self._retrieve_knowledge_base_response(user_input)
+            # Retrieve knowledge base response if available
+            retrieved_response_template = self._retrieve_knowledge_base_response(user_input)
             
-            if knowledge_base_response:
-                # Format the knowledge base response using the persona and context
-                response = self._format_knowledge_base_response(
-                    user_input, knowledge_base_response, persona_prompt, language
-                )
-                logger.info("Used knowledge base response")
+            # STEP 1: THE "ANALYST" CALL
+            # Construct English-focused prompt for clean logic and response
+            analyst_prompt_template = f"""
+You are a highly intelligent customer service analyst. Your task is to determine the correct response to a user's query.
+
+CONTEXT:
+- User's Sentiment: {sentiment}
+- User's Statement: "{user_input}"
+- Most Relevant Knowledge Base Entry: "{retrieved_response_template if retrieved_response_template else 'No relevant entry found'}"
+
+YOUR MISSION:
+1. Analyze if the "Relevant Knowledge Base Entry" is a logical response to the "User's Statement".
+2. If it is relevant, your output should be the text from that template.
+3. If it is NOT relevant, your output should be a new, polite, empathetic, and helpful response that directly addresses the user's statement.
+
+**Your final output for this step MUST be ONLY the clean, user-facing response text in ENGLISH.** Do not include any other analysis or explanation.
+"""
+            
+            # Make the first LLM call to get English response
+            analyst_messages = [
+                {"role": "user", "content": analyst_prompt_template}
+            ]
+            
+            analyst_response = self.llm.invoke(analyst_messages)
+            
+            if analyst_response.get("error"):
+                logger.error("❌ Analyst step failed")
+                english_response = "I apologize, but I'm experiencing technical difficulties. Please try again."
             else:
-                # Fall back to general agent execution
-                master_prompt = self._construct_master_prompt(
-                    persona_prompt, long_term_summary, language
-                )
-                response = self._simple_agent_execution(user_input, master_prompt)
-                logger.info("Used general agent execution")
+                english_response = analyst_response["content"].strip()
+                logger.info(f"✅ Analyst step completed: '{english_response[:50]}...'")
+            
+            # STEP 2: THE "TRANSLATOR" LOGIC
+            if language == 'en':
+                # Mission complete - return English response
+                logger.info("🎯 Language is English - Mission complete")
+                final_response = english_response
+            else:
+                # STEP 3: THE "TRANSLATOR" CALL
+                # Language code to full name mapping
+                language_mapping = {
+                    'ta': 'Tamil (தமிழ்)',
+                    'hi': 'Hindi (हिंदी)', 
+                    'es': 'Spanish (Español)',
+                    'fr': 'French (Français)',
+                    'de': 'German (Deutsch)',
+                    'it': 'Italian (Italiano)',
+                    'pt': 'Portuguese (Português)',
+                    'ru': 'Russian (Русский)',
+                    'ja': 'Japanese (日本語)',
+                    'ko': 'Korean (한국어)',
+                    'zh': 'Chinese (中文)',
+                    'ar': 'Arabic (العربية)'
+                }
+                
+                target_language_full_name = language_mapping.get(language, f'the language with code {language}')
+                
+                # Construct translation prompt
+                translator_prompt_template = f"""
+You are a world-class, native-level translator. Your ONLY task is to translate the following English text into natural, fluent, and grammatically perfect {target_language_full_name}.
+
+Your final output MUST ONLY be the translation. Do not add any extra text, commentary, or apologies.
+
+ENGLISH TEXT TO TRANSLATE:
+"{english_response}"
+"""
+                
+                # Make the second LLM call for translation
+                translator_messages = [
+                    {"role": "user", "content": translator_prompt_template}
+                ]
+                
+                translator_response = self.llm.invoke(translator_messages)
+                
+                if translator_response.get("error"):
+                    logger.error(f"❌ Translator step failed for language: {language}")
+                    final_response = english_response  # Fallback to English
+                else:
+                    final_response = translator_response["content"].strip()
+                    logger.info(f"✅ Translator step completed: {language} translation generated")
             
             # Update short-term memory if provided
             if short_term_memory:
                 try:
                     short_term_memory.chat_memory.add_user_message(user_input)
-                    short_term_memory.chat_memory.add_ai_message(response)
-                except AttributeError as e:
-                    logger.warning(f"Failed to update short-term memory - invalid memory object: {e}")
-                except ImportError as e:
-                    logger.warning(f"Failed to update short-term memory - LangChain not available: {e}")
+                    short_term_memory.chat_memory.add_ai_message(final_response)
+                except Exception as e:
+                    logger.warning(f"⚠️ Memory update failed: {e}")
             
-            logger.info(f"Successfully processed request for user {user_id}")
-            return response
+            logger.info(f"🎉 ANALYST-TRANSLATOR CHAIN COMPLETE for user {user_id}")
+            return final_response
             
-        except ValueError as e:
-            logger.error(f"Invalid input for agent execution (user {user_id}): {e}")
-            return "I apologize, but I couldn't process your request. Please check your input and try again."
-        except RuntimeError as e:
-            logger.error(f"Runtime error in agent execution (user {user_id}): {e}")
-            return "I apologize, but I'm experiencing technical difficulties. Please try again or contact our support team."
+        except Exception as e:
+            logger.error(f"💥 CRITICAL FAILURE in Analyst-Translator chain for user {user_id}: {e}")
+            return "I apologize, but I'm experiencing technical difficulties. Please try again."
+    
+    def _construct_master_prompt_with_language_enforcement(self, persona_prompt: str, long_term_summary: str, 
+                               language: str) -> str:
+        """
+        Construct the master system prompt with STRICT language enforcement.
+        
+        Args:
+            persona_prompt (str): The persona-specific prompt
+            long_term_summary (str): User's conversation history summary
+            language (str): Detected language for response
+            
+        Returns:
+            str: Complete system prompt with language enforcement
+        """
+        # CRITICAL: Enhanced language enforcement to prevent English drift
+        language_enforcement_map = {
+            "en": "You MUST respond ONLY in English. Do not use any other language.",
+            "ta": "நீங்கள் கட்டாயமாக தமிழில் மட்டுமே பதிலளிக்க வேண்டும். வேறு எந்த மொழியையும் பயன்படுத்த வேண்டாம். (You MUST respond ONLY in Tamil. Do not use English or any other language.)",
+            "hi": "आपको केवल हिंदी में ही जवाब देना चाहिए। अंग्रेजी या कोई अन्य भाषा का उपयोग न करें। (You MUST respond ONLY in Hindi. Do not use English or any other language.)",
+            "es": "DEBES responder ÚNICAMENTE en español. No uses inglés ni ningún otro idioma.",
+            "fr": "Vous DEVEZ répondre UNIQUEMENT en français. N'utilisez pas l'anglais ou toute autre langue."
+        }
+        
+        language_enforcement = language_enforcement_map.get(language, "You MUST respond ONLY in English.")
+        
+        # Construct the master prompt with triple-reinforced language instruction
+        master_prompt = f"""
+{persona_prompt}
+
+🚨 CRITICAL LANGUAGE MANDATE 🚨
+{language_enforcement}
+🚨 THIS IS NON-NEGOTIABLE - LANGUAGE CODE: {language} 🚨
+
+IMPORTANT CONTEXT:
+{f"Previous context with this user: {long_term_summary}" if long_term_summary else "This is a new customer interaction."}
+
+AVAILABLE TOOLS:
+You have access to tools that can help you:
+- get_billing_info: Retrieve customer billing information
+- check_network_status: Check network status for specific area codes
+
+RESPONSE GUIDELINES:
+1. Always be helpful and professional
+2. Use tools when appropriate to provide accurate information
+3. 🚨 CRITICAL: Respond EXCLUSIVELY in language code '{language}' 🚨
+4. Follow the persona guidelines above
+5. If you cannot help with something, explain why and suggest alternatives
+6. Keep responses conversational and natural
+
+🚨 FINAL REMINDER: Your response must be in language '{language}' ONLY. No exceptions. 🚨
+
+Remember: You are representing the company, so maintain high standards of service while following your persona guidelines.
+"""
+        
+        return master_prompt.strip()
     
     def get_available_tools(self) -> List[str]:
         """

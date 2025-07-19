@@ -13,5 +13,30 @@
     "summary": "The customer had an issue with a delayed order placed on the previous day (8 PM) and expressed frustration due to the extended wait time. The agent apologized for the inconvenience and offered to personally check the status of the order with the order number #ORD45231. The customer was advised to also check the order tracking section on the website or app, but the agent recommended reaching out to the customer service team for more accurate information. The customer was assured that the agent would work to resolve the issue to their satisfaction. The customer requested communication in Tamil and was informed that a representative would be found to assist them in that language.",
     "last_updated": "2025-07-19T01:20:58.609924",
     "conversation_count": 2
+  },
+  "USER_645892895": {
+    "summary": "The customer was unable to find the invoice for their order, and the agent informed them that the invoice is currently unavailable. The agent offered to help the customer find the invoice and provided them with the necessary steps to do so. The customer was assured that their patience and cooperation are appreciated, and their order will be prioritized. The agent also mentioned that the customer's order is important and their satisfaction is valued.",
+    "last_updated": "2025-07-19T11:44:07.439571",
+    "conversation_count": 3
+  },
+  "USER-59247590": {
+    "summary": "The customer expressed dissatisfaction about a late and damaged delivery. The agent acknowledged the issue and offered to help resolve it, providing a Tamil response for the customer to report the problem. The customer's issue was not related to the initially retrieved template about downloading an invoice.",
+    "last_updated": "2025-07-19T13:22:57.533253",
+    "conversation_count": 2
+  },
+  "969543-ORD": {
+    "summary": "The customer expressed dissatisfaction with a product they received, and the agent empathized with their frustration, asked for more details about the issues, and offered help to resolve the problem. The customer was not satisfied with the product they ordered.",
+    "last_updated": "2025-07-19T14:51:12.136332",
+    "conversation_count": 1
+  },
+  "80485-86": {
+    "summary": "The customer is experiencing difficulties with returning a product and the agent acknowledges their frustration, apologizes for the inconvenience, and offers assistance in the return process. The customer needs to provide the order number, product name, and reason for returning it to facilitate further assistance. The agent aims to resolve the issue to the customer's satisfaction.",
+    "last_updated": "2025-07-19T14:54:22.699731",
+    "conversation_count": 2
+  },
+  "USER-75984359": {
+    "summary": "The customer, Ajay Varma, placed an order for a phone (Order #12345) five days ago but has not received it yet. There is no update in the tracking. He contacted customer service to inquire about the location and estimated delivery time of his order. The agent apologized for the inconvenience, confirmed a delay, and promised to personally handle the issue to ensure a resolution. The agent requested more details about the delivery address to locate the package and provide a more precise update.",
+    "last_updated": "2025-07-19T16:11:10.583944",
+    "conversation_count": 4
   }
 }
