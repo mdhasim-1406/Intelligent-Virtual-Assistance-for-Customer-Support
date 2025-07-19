@@ -1,0 +1,22 @@
+TELECOM FAQ KNOWLEDGE BASE
+
+Q: How can I check my current bill and payment due date?
+A: You can check your current bill in several ways: 1) Log into your online account at our website or mobile app, 2) Call our automated billing line at 1-800-BILLING, 3) Text "BILL" to 12345 for a summary. Your bill shows your current charges, payment due date, and payment history. If you have autopay enabled, your payment will be automatically deducted on the due date. For billing disputes, contact customer service within 30 days of receiving your bill.
+
+Q: I'm experiencing network connectivity issues. What should I do?
+A: First, try these troubleshooting steps: 1) Turn your phone off and on again, 2) Check if airplane mode is disabled, 3) Ensure you're in an area with good coverage, 4) Try connecting to WiFi if available. If issues persist, there may be a network outage in your area. You can check our network status page online or call our technical support at 1-800-TECH-HELP. We typically resolve network issues within 4-6 hours. If the problem is device-specific, we may need to reset your network settings or replace your SIM card.
+
+Q: How do I upgrade my current plan or add features?
+A: Plan upgrades can be done instantly through: 1) Your online account - go to "Manage Plan" section, 2) Our mobile app - tap "Upgrade Plan", 3) Call customer service at 1-800-SERVICE, 4) Visit any of our retail stores. Popular upgrades include unlimited data, international calling, and mobile hotspot features. Most plan changes take effect immediately, though some may start with your next billing cycle. Upgrading typically doesn't require a new contract, but downgrading might have restrictions during promotional periods.
+
+Q: What are the charges for international roaming and how do I enable it?
+A: International roaming rates vary by country. Popular destinations: Canada/Mexico - $5/day for unlimited data, Europe - $10/day, Asia - $12/day. To enable international roaming: 1) Log into your account and go to "International Services", 2) Call us at 1-800-ROAMING before you travel, 3) Use our mobile app to add international plans. We recommend adding an international plan before traveling to avoid pay-per-use charges, which can be $2.05/MB for data. You'll receive a text confirmation when roaming is activated. Remember to enable data roaming in your phone settings when abroad.
+
+Q: I need a new SIM card. How do I get one and activate it?
+A: You can get a new SIM card: 1) Visit any retail store for immediate replacement (bring photo ID), 2) Order online for $10 shipping fee, 3) Call customer service for emergency replacement if your phone is stolen. SIM replacement is free for defective cards or if you're upgrading your device. To activate: 1) Insert the new SIM into your phone, 2) Call our activation line at 1-800-ACTIVATE, 3) Follow the automated prompts with your account PIN. Activation typically takes 5-10 minutes. Your old SIM will be automatically deactivated. If you're switching from a different carrier, you'll need to request a number port, which takes 2-4 hours during business hours.
+
+Q: How do I report a lost or stolen phone and protect my account?
+A: Immediately call our emergency line at 1-800-EMERGENCY to suspend your service and prevent unauthorized usage. You can also log into your online account to suspend service instantly. We'll place a temporary hold on your line to prevent charges while you locate your device or get a replacement. If your phone is stolen, file a police report and provide us with the report number for insurance claims. You can track your device using our mobile app's "Find My Phone" feature. Service can be restored instantly once you recover your device or activate a replacement.
+
+Q: What should I do if I'm getting charged for services I didn't order?
+A: Contact our billing department immediately at 1-800-BILLING or through secure message in your online account. We'll investigate unauthorized charges and provide credits for verified billing errors. Common issues include third-party premium services that may have been activated accidentally. We offer free billing alerts via text to help you monitor your account. For recurring unauthorized charges, we can place a billing restriction on your account to prevent future third-party charges. Resolution typically takes 3-5 business days, and credits appear on your next bill.
