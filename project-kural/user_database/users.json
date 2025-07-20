@@ -38,5 +38,20 @@
     "summary": "The customer, Ajay Varma, placed an order for a phone (Order #12345) five days ago but has not received it yet. There is no update in the tracking. He contacted customer service to inquire about the location and estimated delivery time of his order. The agent apologized for the inconvenience, confirmed a delay, and promised to personally handle the issue to ensure a resolution. The agent requested more details about the delivery address to locate the package and provide a more precise update.",
     "last_updated": "2025-07-19T16:11:10.583944",
     "conversation_count": 4
+  },
+  "hi": {
+    "summary": "The customer inquired about the status of their order, number 80729629, but was unable to provide the order number in English. The agent informed the customer that they do not have the capability to communicate in Tamil, and suggested the customer to reformulate their question in English or contact the customer support number for potential Tamil-speaking representatives. The customer was unable to continue the conversation in English, and the issue remains unresolved.",
+    "last_updated": "2025-07-19T23:51:52.170169",
+    "conversation_count": 2
+  },
+  "USER-87684542": {
+    "summary": "The customer inquired about the status of their order ORD_7034759. The agent asked for more specific details required by the customer to assist them better. The customer provided the order number, and the agent assured them they would look into it and provide the requested information. The customer seemed satisfied with the agent's response.",
+    "last_updated": "2025-07-20T12:11:01.598405",
+    "conversation_count": 2
+  },
+  "USER79247": {
+    "summary": "The customer, who spoke in Tamil, reported that their order (ORD-7837568) has not arrived and inquired about its status. The agent acknowledged the issue and is currently checking the order's details and delivery status to assist the customer. The customer's overall satisfaction is not indicated in this conversation.",
+    "last_updated": "2025-07-20T12:15:14.822773",
+    "conversation_count": 2
   }
 }
