@@ -1,289 +1,236 @@
-# Project Kural: An Adaptive, Multilingual AI Customer Service Agent
+<div align="center">
+  <h1>🤖 Project Kural</h1>
+  <p><strong>An Adaptive, Multilingual AI Customer Service Agent</strong></p>
+  <p>
+    <img src="https://img.shields.io/badge/Python-3.9%2B-blue?style=flat&logo=python" alt="Python 3.9+"/>
+    <img src="https://img.shields.io/badge/LLM-OpenRouter-FF6F00?style=flat" alt="OpenRouter LLM"/>
+    <img src="https://img.shields.io/badge/Vector_Store-FAISS-00C853?style=flat" alt="FAISS"/>
+    <img src="https://img.shields.io/badge/UI-Gradio-FF6B6B?style=flat" alt="Gradio UI"/>
+    <img src="https://img.shields.io/badge/TTS-gTTS-4285F4?style=flat" alt="gTTS"/>
+    <img src="https://img.shields.io/badge/STT-Whisper-FFD700?style=flat" alt="Whisper STT"/>
+    <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="License MIT"/>
+  </p>
+</div>
 
-## Vision
+---
 
-Project Kural is not just another chatbot—it's a cognitive entity designed to revolutionize customer service interactions. By combining adaptive personas, long-term memory, and multilingual voice capabilities, Kural provides personalized, context-aware support that evolves with each conversation. Built on a foundation of 26,800+ real customer service interactions, it delivers accurate, empathetic, and professionally consistent responses across languages and cultures.
+## 📋 Overview
 
-## Core Features
+**Project Kural** (குறள்) is a cognitive AI customer service agent that goes beyond conventional chatbots. Named after the ancient Tamil literary work *Thirukkural* — emphasizing virtue, ethics, and compassionate communication — this system delivers **emotionally intelligent, context-aware, and multilingual customer support**.
 
-- **🎭 Adaptive Persona**: Dynamically changes its communication tone and style based on detected user sentiment (empathetic for frustrated customers, efficient for positive interactions, professional for neutral inquiries)
-- **📊 Data-Driven Responses**: Leverages a comprehensive dataset of 26,800+ customer service interactions for accurate, high-quality answers using FAISS vector similarity search
-- **🌍 Multilingual Voice I/O**: Supports seamless text and voice interactions in English, Tamil, and Hindi with automatic language detection
-- **🧠 Long-Term Memory**: Maintains persistent conversation history and user context across sessions for personalized service
-- **🔧 Tool Usage**: Integrates with external APIs and tools for real-time data access (billing information, network status, etc.)
-- **⚡ Real-time Processing**: Powered by OpenRouter's LLM infrastructure for fast, reliable responses
+At its core, Kural dynamically adapts its communication persona based on detected user sentiment, maintains persistent memory across sessions, and provides voice-based interaction in English, Tamil, and Hindi — making it a truly inclusive solution for global customer service operations.
 
-## Tech Stack
+---
 
-- **Backend**: Python 3.9+, LangChain, OpenRouter API, FAISS Vector Database
-- **Data Processing**: Pandas, NumPy, OpenAI Whisper (speech-to-text)
-- **Frontend**: Streamlit, gTTS (text-to-speech)
-- **Memory**: JSON-based persistent storage, conversation summarization
-- **Voice**: OpenAI Whisper for transcription, gTTS for synthesis
+## ✨ Key Capabilities
 
-## Project Structure
+| Capability | Description |
+|---|---|
+| **🎭 Adaptive Persona Engine** | Dynamically switches between three personas — empathetic de-escalation, efficient-friendly, and professional-direct — based on real-time sentiment analysis of user input |
+| **🧠 Long-Term Memory** | Persistent JSON-backed conversation history with per-user context retention across sessions, including summarization and recall |
+| **🔍 Vector Knowledge Base** | FAISS-powered semantic search over **26,800+ real customer service interactions** for accurate, contextually grounded responses |
+| **🌐 Multilingual Voice I/O** | Speech-to-text via OpenAI Whisper and text-to-speech via gTTS, with automatic language detection for English, Tamil, and Hindi |
+| **🛠️ Tool Integration** | Extensible tool-calling framework for real-time data access — billing lookups, network status checks, and custom API integrations |
+| **⚡ LLM-Powered Reasoning** | Backed by OpenRouter's LLM infrastructure (Gemini Flash 1.5 default) for fast, coherent, and context-rich responses |
+
+---
+
+## 🧱 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Gradio Web Interface                     │
+│          Chat UI · Audio I/O · Persona Indicator             │
+└──────────────────────┬──────────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────────┐
+│                    Perception Module                         │
+│  ┌─────────────────┐  ┌──────────────────────────────────┐  │
+│  │  Whisper STT     │  │  Sentiment Analysis (OpenRouter)  │  │
+│  │  (speech→text)   │  │  (frustrated/positive/neutral)    │  │
+│  └─────────────────┘  └──────────────────────────────────┘  │
+└──────────────────────┬──────────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────────┐
+│                    Kural Agent (Orchestrator)                │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────────────┐ │
+│  │  Persona  │ │  Memory  │ │  Tools   │ │  Vector Store  │ │
+│  │  Manager  │ │  Module  │ │  Layer   │ │  (FAISS)       │ │
+│  └──────────┘ └──────────┘ └──────────┘ └────────────────┘ │
+│                                                              │
+│  OpenRouter API ────► LLM (Gemini Flash 1.5)                 │
+└──────────────────────┬──────────────────────────────────────┘
+                       │
+┌──────────────────────▼──────────────────────────────────────┐
+│                    Data Layer                                 │
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │  Training CSV    │  │  Telecom FAQ    │                   │
+│  │  (26,800+ ints)  │  │  Knowledge Base │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+│  ┌─────────────────┐  ┌─────────────────┐                   │
+│  │  User DB (JSON)  │  │  Persona Config │                   │
+│  │  (per-user mem)  │  │  (3 personas)   │                   │
+│  └─────────────────┘  └─────────────────┘                   │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📁 Project Structure
 
 ```
 project-kural/
-├── README.md
-├── app.py                          # Main Streamlit application
+├── app.py                          # Main Gradio application entry point
 ├── requirements.txt                # Python dependencies
 ├── .env                           # Environment variables (API keys)
+│
 ├── core/                          # Core backend modules
 │   ├── __init__.py
-│   ├── agent.py                   # Main AI agent orchestrator
-│   ├── memory.py                  # Conversation memory management
-│   ├── perception.py              # Speech & sentiment analysis
-│   ├── tools.py                   # External API integration tools
-│   └── vector_store.py            # Knowledge base vector database
-├── knowledge_base/                # Additional knowledge files
-│   └── telecom_faq.txt
+│   ├── agent.py                  # Main AI agent orchestrator (KuralAgent)
+│   ├── memory.py                 # Conversation memory management
+│   ├── perception.py             # Speech-to-text & sentiment analysis
+│   ├── tools.py                  # External API integration tools
+│   └── vector_store.py           # FAISS knowledge base & semantic search
+│
 ├── personas/                      # Adaptive personality prompts
-│   ├── efficient_friendly.txt
-│   ├── empathetic_deescalation.txt
-│   └── professional_direct.txt
-├── training_data/                 # Core knowledge dataset
+│   ├── empathetic_deescalation.txt   # For frustrated / upset customers
+│   ├── efficient_friendly.txt        # For positive / satisfied customers
+│   └── professional_direct.txt       # For neutral / businesslike interactions
+│
+├── knowledge_base/               # Domain-specific knowledge
+│   └── telecom_faq.txt           # Telecom FAQ reference
+│
+├── training_data/                # Vector search corpus
 │   └── Intelligent Virtual Assistants for Customer Support (1).csv
-├── user_database/                 # User conversation histories
+│                                 # 26,800+ real customer service interactions
+│
+├── user_database/                # Persistent user memory
 │   └── users.json
-└── tests/                         # Test suite
-    └── test_core_logic.py
+│
+├── tests/                        # Test suite
+│   ├── test_core_logic.py
+│   └── test_app_logic.py
+│
+└── TROUBLESHOOTING.md            # Setup & runtime troubleshooting guide
 ```
 
-## Setup and Installation
+---
 
-### 🚨 CRITICAL PREREQUISITES
+## 🚀 Quick Start
 
-**Git LFS is NOT OPTIONAL** - The application depends on large model files that require Git Large File Storage (git-lfs). **Without proper git-lfs setup, the application will fail to start with cryptic errors.**
+### Prerequisites
 
-#### System Requirements
-- **Python 3.9+** - Download from [python.org](https://python.org)
-- **Git** - Download from [git-scm.com](https://git-scm.com)
-- **OpenRouter API Key** - Get from [openrouter.ai](https://openrouter.ai)
-- **FFmpeg** - Required for audio processing
+- **Python 3.9+** — [python.org](https://python.org)
+- **FFmpeg** — Required by Whisper for audio processing
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install ffmpeg
+  # macOS
+  brew install ffmpeg
+  ```
+- **OpenRouter API Key** — [openrouter.ai](https://openrouter.ai)
 
-#### MANDATORY: Git LFS Installation & Configuration
+### Setup
 
-**⚠️ YOU MUST COMPLETE ALL STEPS BELOW BEFORE PROCEEDING**
-
-1. **Install Git LFS System Package**
-   ```bash
-   # Linux (Ubuntu/Debian)
-   sudo apt-get update && sudo apt-get install git-lfs
-   
-   # Linux (CentOS/RHEL)
-   sudo yum install git-lfs
-   
-   # macOS
-   brew install git-lfs
-   
-   # Windows
-   # Download installer from: https://git-lfs.github.io/
-   ```
-
-2. **Initialize Git LFS for Your User Account**
-   ```bash
-   git lfs install
-   ```
-   
-   **Important**: This command only needs to be run **once per user account**. It configures Git to use LFS globally.
-
-3. **Verify Git LFS Installation**
-   ```bash
-   git lfs version
-   # Should display version information like: git-lfs/3.4.0 (GitHub; linux amd64; go 1.20.3)
-   ```
-
-### Installation Steps
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/project-kural.git
-   cd project-kural
-   ```
-
-2. **Create a Virtual Environment**
-   ```bash
-   python -m venv venv
-   
-   # On Linux/Mac:
-   source venv/bin/activate
-   
-   # On Windows:
-   venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **🔧 CRITICAL: Clean Up Any Previous Failed Downloads**
-   
-   If you've previously attempted to download the model and encountered errors, you **must** clean up the corrupted files:
-   
-   ```bash
-   # Remove any existing model directory
-   rm -rf all-MiniLM-L6-v2
-   
-   # Clear any Git LFS cache (optional but recommended)
-   git lfs prune
-   ```
-
-5. **Download the Embeddings Model** 
-   ```bash
-   # IMPORTANT: Run this command from the project root directory
-   git clone https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
-   ```
-   
-   **Expected Behavior**: You should see progress messages like:
-   ```
-   Cloning into 'all-MiniLM-L6-v2'...
-   remote: Enumerating objects: 20, done.
-   remote: Counting objects: 100% (20/20), done.
-   ...
-   Downloading model.safetensors (91.0 MB)
-   ```
-
-6. **🔍 MANDATORY: Verify the Download Was Successful**
-   
-   **This is the most critical step** - verify that the large files were actually downloaded:
-   
-   ```bash
-   ls -lh all-MiniLM-L6-v2/
-   ```
-   
-   **✅ SUCCESS INDICATORS - You must see:**
-   - `model.safetensors` with size approximately **91M** (not 133B or similar small size)
-   - `pytorch_model.bin` with size approximately **91M**
-   - Multiple files totaling ~200MB+
-   
-   **❌ FAILURE INDICATORS - If you see:**
-   - `model.safetensors` with size of a few hundred bytes (e.g., 133B, 256B)
-   - Files containing text starting with "version https://git-lfs.github.com/spec/v1"
-   - Total directory size under 10MB
-   
-   **If you see failure indicators, the download failed. You must:**
-   1. Re-check your git-lfs installation: `git lfs version`
-   2. Delete the directory: `rm -rf all-MiniLM-L6-v2`
-   3. Re-run the git clone command
-
-7. **Configure API Key**
-   
-   Create a `.env` file in the project root:
-   ```bash
-   touch .env
-   ```
-   
-   Add your OpenRouter API key to the `.env` file:
-   ```
-   OPENROUTER_API_KEY=your_api_key_here
-   ```
-
-8. **Final System Verification**
-   ```bash
-   # Verify Python environment
-   python -c "import streamlit; print('✅ Streamlit installed successfully')"
-   
-   # Verify model files
-   python -c "import os; print('✅ Model size:', os.path.getsize('all-MiniLM-L6-v2/model.safetensors'), 'bytes')"
-   ```
-
-### 🛠️ Troubleshooting Installation Issues
-
-#### Git LFS Issues
-
-**Problem**: `HeaderTooLarge` error when starting the application
-
-**Diagnosis**: Git LFS pointer files were downloaded instead of actual model files
-
-**Solution**:
 ```bash
-# Step 1: Verify git-lfs is installed and working
-git lfs version
+# 1. Clone the repository
+git clone https://github.com/mdhasim-1406/Intelligent-Virtual-Assistance-for-Customer-Support.git
+cd Intelligent-Virtual-Assistance-for-Customer-Support/project-kural
 
-# Step 2: If git-lfs is not installed, install it
-sudo apt-get update && sudo apt-get install git-lfs  # Linux
-brew install git-lfs                                 # macOS
+# 2. Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate   # Linux/macOS
+# venv\Scripts\activate    # Windows
 
-# Step 3: Initialize git-lfs for your user
-git lfs install
+# 3. Install dependencies
+pip install -r requirements.txt
 
-# Step 4: Clean up corrupted download
-rm -rf all-MiniLM-L6-v2
+# 4. Configure your API key
+echo "OPENROUTER_API_KEY=your_key_here" > .env
 
-# Step 5: Re-download correctly
+# 5. (Optional) Download embeddings model for local vector search
 git clone https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
 
-# Step 6: Verify success
+# 6. Launch the application
+python app.py
+```
+
+### 🐳 Git LFS Note
+
+The embeddings model (`all-MiniLM-L6-v2`) uses Git LFS for large model files. Ensure Git LFS is set up:
+
+```bash
+sudo apt-get install git-lfs   # Linux
+brew install git-lfs           # macOS
+git lfs install
+```
+
+After cloning the model repo, verify file sizes are correct (~91 MB each):
+```bash
 ls -lh all-MiniLM-L6-v2/model.safetensors
-# Should show ~91M, not a few hundred bytes
 ```
 
-#### File Size Verification
+---
 
-**Check if you have the correct files**:
+## 🎭 Adaptive Persona System
+
+Kural intelligently detects user sentiment and selects the appropriate communication persona:
+
+| Sentiment | Persona | Behavior |
+|---|---|---|
+| **Frustrated / Upset** | 🟠 Empathetic De-escalation | Validates emotions, apologizes sincerely, speaks calmly, takes ownership |
+| **Satisfied / Positive** | 🟢 Efficient & Friendly | Matches enthusiasm, proactive suggestions, quick solutions, cheerful tone |
+| **Neutral / Businesslike** | 🔵 Professional & Direct | Clear, structured instructions; concise; task-focused; formal etiquette |
+
+---
+
+## 🧪 Running Tests
+
 ```bash
-# These commands should show large file sizes
-ls -lh all-MiniLM-L6-v2/model.safetensors      # Should be ~91M
-ls -lh all-MiniLM-L6-v2/pytorch_model.bin      # Should be ~91M
-du -sh all-MiniLM-L6-v2/                       # Should be ~200M total
+cd project-kural
+pytest tests/ -v                    # Run all tests
+pytest tests/test_core_logic.py     # Run core logic tests
+pytest tests/ -k "test_name"        # Run specific test
 ```
 
-**If files are tiny (< 1KB each)**:
-```bash
-# You have pointer files, not real files
-cat all-MiniLM-L6-v2/model.safetensors
-# If you see "version https://git-lfs.github.com/spec/v1", you have pointers
+---
 
-# Fix: Delete and re-download with proper git-lfs setup
-rm -rf all-MiniLM-L6-v2
-git lfs install
-git clone https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
-```
+## 📊 Dataset
 
-#### Network and Connectivity Issues
+The system is trained on a comprehensive dataset of **26,800+ real customer service interactions** covering intents such as:
+- Order cancellation and modification
+- Billing inquiries and disputes
+- Technical support and troubleshooting
+- Account management
+- General inquiries
 
-**Problem**: Download hangs or fails
+The data is ingested into a **FAISS vector index** for efficient semantic similarity search at query time.
 
-**Solutions**:
-```bash
-# Option 1: Use git-lfs explicit pull
-git clone https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
-cd all-MiniLM-L6-v2
-git lfs pull
+---
 
-# Option 2: Use alternative clone method
-git lfs clone https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+## 🛣️ Roadmap
 
-# Option 3: Check LFS tracking
-git lfs track
-git lfs ls-files
-```
+- [ ] **Streaming responses** for reduced latency
+- [ ] **Multi-turn tool execution** with state tracking
+- [ ] **Database-backed memory** (PostgreSQL / SQLite) replacing JSON storage
+- [ ] **Admin dashboard** for monitoring conversations and persona performance
+- [ ] **Custom persona builder** for enterprise branding
+- [ ] **WhatsApp / Telegram bot integration**
 
-#### Directory Structure Verification
+---
 
-After **successful** installation, your directory should look like:
-```
-project-kural/
-├── all-MiniLM-L6-v2/              # ← Downloaded embeddings model
-│   ├── config.json                # ~1KB
-│   ├── model.safetensors          # ~91MB ← MUST BE LARGE
-│   ├── pytorch_model.bin          # ~91MB ← MUST BE LARGE
-│   ├── tokenizer.json             # ~2MB
-│   ├── vocab.txt                  # ~232KB
-│   └── ...
-├── core/
-├── personas/
-├── training_data/
-├── app.py
-├── requirements.txt
-└── README.md
-```
+## 🤝 Contributing
 
-**🚨 WARNING SIGNS** - If you see:
-- `model.safetensors` showing 133 bytes instead of ~91MB
-- Files containing "version https://git-lfs.github.com/spec/v1"
-- Total directory size under 10MB
+Contributions are welcome! Please open an issue or submit a pull request. For major changes, please start a discussion first.
 
-**You have pointer files, not actual model files. The application will fail to start.**
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ for intelligent, compassionate customer service</sub>
+</div>
